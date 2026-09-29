@@ -14,21 +14,21 @@ const projects = [
     title: "Voyagent-AI",
     type: "AI TRAVEL PLANNER",
     description:
-      "An AI-powered travel planning platform that combines multi-agent orchestration, modern web technologies and travel services to generate personalized trip plans.",
-    tech: ["React", "Node.js", "LangGraph", "LLM", "Maps"],
-    highlights: ["Multi-agent planning", "Travel intelligence", "Interactive trip experience"],
+      "An AI-powered travel planner built with React, Node.js and LangGraph. Multiple AI agents handle destination selection, budget planning and itinerary generation, connected through REST APIs and an interactive interface.",
+    tech: ["React", "Node.js", "Tailwind CSS", "Python", "LangGraph", "FastAPI", "LLM", "Maps", "Git", "GitHub"],
+    highlights: ["Multi-agent planning", "Budget & itinerary agents", "Interactive trip experience"],
     featured: true,
     github: "https://github.com/PremKhamkar/Voyagent-AI",
   },
   {
-    title: "MCA College Chatbot",
+    title: "Student Support Chatbot",
     type: "AI / RAG",
     description:
-      "A student-support chatbot designed to answer academic and department questions using retrieval-augmented generation and structured college data.",
-    tech: ["Python", "LangChain", "RAG", "LLM", "MySQL"],
-    highlights: ["RAG pipeline", "College knowledge base", "Student support"],
+      "An AI-powered chatbot that answers student queries using retrieval-augmented generation, Gemini LLM and a vector database, with an interactive Streamlit interface and document retrieval.",
+    tech: ["Python", "LangChain", "RAG", "Gemini LLM", "Vector Database", "Streamlit", "Git", "GitHub"],
+    highlights: ["RAG pipeline", "Document retrieval", "Streamlit interface"],
     featured: false,
-    github: "#",
+    github: "https://github.com/PremKhamkar/Student_support_chatbot",
   },
   {
     title: "Employee Analytics",
@@ -38,7 +38,7 @@ const projects = [
     tech: ["Python", "Pandas", "Matplotlib", "EDA"],
     highlights: ["Data exploration", "Visual analysis", "Attrition insights"],
     featured: false,
-    github: "#",
+    github: null,
   },
   {
     title: "Amazon Interface",
@@ -48,7 +48,7 @@ const projects = [
     tech: ["HTML", "CSS", "JavaScript"],
     highlights: ["Responsive UI", "Frontend fundamentals", "Interactive components"],
     featured: false,
-    github: "#",
+    github: null,
   },
 ];
 
@@ -68,17 +68,16 @@ const skills = [
   "MySQL",
   "Git",
   "GitHub",
-  "Tailwind",
+  "Tailwind CSS",
 ];
 
 /* =========================================================
    CONTACT CONFIG
-   Replace these placeholders before deployment.
 ========================================================= */
 
 const contactConfig = {
-  email: "your-email@example.com",
-  linkedin: "",
+  email: "premdipakkhamkar18@gmail.com",
+  linkedin: "https://www.linkedin.com/in/premkhamkar",
 };
 
 /* =========================================================
@@ -380,7 +379,7 @@ function ProjectCommandCenter() {
         </div>
 
         <div className="relative mt-6 flex flex-wrap gap-3">
-          {activeProject.github !== "#" && <a href={activeProject.github} target="_blank" rel="noopener noreferrer" className="rounded-full bg-white px-6 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-black transition hover:scale-105 hover:bg-white/90">Open GitHub →</a>}
+          {activeProject.github && <a href={activeProject.github} target="_blank" rel="noopener noreferrer" className="rounded-full bg-white px-6 py-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-black transition hover:scale-105 hover:bg-white/90">Open GitHub →</a>}
           {activeProject.title === "Voyagent-AI" && <a href="#architecture" className="rounded-full border border-white/15 px-6 py-3 text-[9px] uppercase tracking-[0.2em] text-white/60 transition hover:border-white/40 hover:text-white">View Architecture →</a>}
         </div>
 
@@ -394,13 +393,29 @@ function ProjectCommandCenter() {
    TECHNOLOGY MATRIX
 ========================================================= */
 
+const techAliases = {
+  llms: "llm",
+  geminillm: "llm",
+  nodejs: "node",
+  reactjs: "react",
+  tailwind: "tailwindcss",
+  vectordatabases: "vectordatabase",
+};
+
+function techKey(name) {
+  const key = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return techAliases[key] || key;
+}
+
 function TechnologyMatrix() {
   const [activeTech, setActiveTech] =
     useState("React");
 
   const relatedProjects = projects.filter(
     (project) =>
-      project.tech.includes(activeTech)
+      project.tech.some(
+        (tech) => techKey(tech) === techKey(activeTech)
+      )
   );
 
   return (
@@ -454,7 +469,7 @@ function TechnologyMatrix() {
 
           <p className="mt-3 text-sm text-white/30">
             {relatedProjects.length === 0
-              ? "Currently exploring this technology."
+              ? "No portfolio project lists this technology yet."
               : `${relatedProjects.length} project${relatedProjects.length > 1
                 ? "s"
                 : ""
@@ -499,7 +514,7 @@ function TechnologyMatrix() {
                       (tech) => (
                         <span
                           key={tech}
-                          className={`rounded-full border px-2.5 py-1 text-[8px] ${tech === activeTech
+                          className={`rounded-full border px-2.5 py-1 text-[8px] ${techKey(tech) === techKey(activeTech)
                             ? "border-white/30 text-white"
                             : "border-white/10 text-white/25"
                             }`}
@@ -515,11 +530,11 @@ function TechnologyMatrix() {
           ) : (
             <div className="rounded-2xl border border-dashed border-white/10 p-8 text-center">
               <p className="text-sm text-white/30">
-                More projects using {activeTech}
+                No project in the build log uses {activeTech} yet
               </p>
 
               <p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/15">
-                Coming to the build log
+                Not listed in current projects
               </p>
             </div>
           )}
@@ -1069,7 +1084,7 @@ function ContactCommandCenter() {
     {
       id: "LINKEDIN",
       label: "LINKEDIN",
-      value: contactConfig.linkedin || "Not configured",
+      value: contactConfig.linkedin ? "linkedin.com/in/premkhamkar" : "Not configured",
       href: contactConfig.linkedin,
     },
   ];
@@ -1169,7 +1184,7 @@ function ContactCommandCenter() {
             {channel === "GITHUB" &&
               "Open-source channel selected. Explore repositories, experiments and project source."}
             {channel === "LINKEDIN" &&
-              "Professional network channel selected. Add your LinkedIn URL before deployment."}
+              "Professional network channel selected. Connect on LinkedIn."}
           </p>
         </div>
 
@@ -1198,7 +1213,7 @@ function ContactCommandCenter() {
               type="button"
               disabled
               className="cursor-not-allowed rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/25"
-              title="Add your LinkedIn URL in contactConfig before deployment."
+              title="LinkedIn URL is not configured in contactConfig."
             >
               Channel Not Configured
             </button>
@@ -1624,9 +1639,9 @@ function App() {
   ];
 
   useEffect(() => {
-    document.title = "Prem Khamkar — PREM.OS";
+    document.title = "PREM.OS — Prem Khamkar";
     const description =
-      "Prem Khamkar — MCA developer portfolio featuring React, Python, AI, LangGraph, RAG and full-stack projects.";
+      "Prem Khamkar — MCA student and developer building AI, full-stack and Python projects, with a focus on manual testing and bug finding.";
 
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
@@ -1817,7 +1832,7 @@ function App() {
               <span className="h-px w-8 bg-white/20" />
 
               <p className="text-[10px] uppercase tracking-[0.5em] text-white/30">
-                AI SYSTEMS / FULL-STACK DEVELOPMENT
+                AI SYSTEMS / FULL-STACK / TESTING
               </p>
             </div>
 
@@ -1832,14 +1847,16 @@ function App() {
 
             <div className="mt-8">
               <p className="text-sm uppercase tracking-[0.3em] text-white/60 md:text-base">
-                AI • Full-Stack • Developer
+                MCA Student &amp; Developer
+                <br />
+                <span className="text-white/35">AI • Full-Stack • Manual Testing</span>
               </p>
             </div>
 
             <p className="mt-6 max-w-xl text-sm leading-7 text-white/40 md:text-base md:leading-8">
-              I build intelligent applications where AI,
-              modern web technologies and practical engineering
-              come together to solve real-world problems.
+              I build AI-powered and full-stack projects, and I test
+              software by hand to find bugs, learning through
+              practical, hands-on work.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -1948,7 +1965,7 @@ function App() {
                 </span>
               </>
             }
-            description="An MCA developer focused on turning ideas into practical software, with a growing focus on artificial intelligence, full-stack development and data-driven applications."
+            description="An MCA student and developer working across AI, full-stack development, data analysis and manual software testing, turning ideas into practical software projects."
           />
 
           <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
@@ -1971,7 +1988,10 @@ function App() {
                   <p className="mt-6 max-w-2xl text-sm leading-7 text-white/40">
                     I enjoy taking a problem from idea to implementation:
                     designing the interface, connecting the backend, working
-                    with data and integrating AI where it adds real value.
+                    with data, integrating AI where it adds real value and
+                    manually testing software to find bugs. Currently in the
+                    second year of MCA at G H Raisoni College of Engineering
+                    and Management, Pune (expected graduation April 2027).
                   </p>
 
                   <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -1981,7 +2001,7 @@ function App() {
                       </p>
                       <p className="mt-3 text-2xl font-semibold">MCA</p>
                       <p className="mt-1 text-[10px] text-white/25">
-                        Computer Applications
+                        G H Raisoni · Pune
                       </p>
                     </div>
 
@@ -2017,10 +2037,10 @@ function App() {
 
                 <div className="mt-7 space-y-3">
                   {[
-                    ["01", "AI Engineering", "LLMs, RAG & agent workflows"],
+                    ["01", "AI Development", "LLMs, RAG & agent workflows"],
                     ["02", "Full-Stack", "React, Node.js & APIs"],
                     ["03", "Data", "Python, analysis & visualization"],
-                    ["04", "Problem Solving", "Build, test & iterate"],
+                    ["04", "Manual Testing", "Bug finding & manual verification"],
                   ].map(([number, title, description]) => (
                     <div
                       key={number}
@@ -2457,7 +2477,7 @@ function App() {
 
                     <div className="mt-10 grid gap-2">
                       {[
-                        ["01", "MCA Developer", "AI, full-stack & data-driven applications"],
+                        ["01", "MCA Student", "AI, full-stack, data & manual testing"],
                         ["02", "Project Focus", "Practical systems built around real use cases"],
                         ["03", "Core Stack", "React · Python · Node.js · AI tooling"],
                       ].map(([number, title, description]) => (
@@ -2498,7 +2518,7 @@ function App() {
                       </div>
                       <div className="flex justify-between gap-4">
                         <span className="text-white/20">Profile</span>
-                        <span className="text-white/50">MCA Developer</span>
+                        <span className="text-white/50">MCA Student / Developer</span>
                       </div>
                       <div className="flex justify-between gap-4">
                         <span className="text-white/20">Focus</span>
@@ -2506,7 +2526,7 @@ function App() {
                       </div>
                       <div className="flex justify-between gap-4">
                         <span className="text-white/20">Status</span>
-                        <span className="text-white/70">AVAILABLE</span>
+                        <span className="text-white/70">MCA STUDENT</span>
                       </div>
                     </div>
 
